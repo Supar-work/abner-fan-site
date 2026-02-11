@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abner Zelig - Official Unofficial Fan Site 🤖</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Heebo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6C5CE7;
+            --secondary: #00CEC9;
+            --accent: #FD79A8;
+            --dark: #0a0a1a;
+            --card: #12122a;
+            --text: #e0e0f0;
+            --glow: rgba(108, 92, 231, 0.4);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+        [dir="rtl"] body, [dir="rtl"] { font-family: 'Heebo', sans-serif; }
+
+        /* Language toggle */
+        .lang-toggle {
+            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            background: var(--primary); border: none; color: white;
+            padding: 10px 20px; border-radius: 50px; cursor: pointer;
+            font-size: 1rem; font-weight: 600; transition: all 0.3s;
+            box-shadow: 0 4px 20px var(--glow);
+        }
+        [dir="rtl"] .lang-toggle { right: auto; left: 20px; }
+        .lang-toggle:hover { transform: scale(1.1); background: var(--accent); }
+
+        /* Stars background */
+        .stars {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+        .star {
+            position: absolute; background: white; border-radius: 50%;
+            animation: twinkle var(--dur) ease-in-out infinite alternate;
+        }
+        @keyframes twinkle { from { opacity: 0.2; } to { opacity: 1; } }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+            position: relative; z-index: 1; padding: 2rem;
+        }
+        .hero-emoji {
+            font-size: 8rem; animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px var(--glow));
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; margin: 1rem 0;
+        }
+        .hero .subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem); opacity: 0.8;
+            max-width: 600px;
+        }
+        .scroll-hint {
+            position: absolute; bottom: 30px;
+            animation: bounce 2s infinite;
+            font-size: 2rem; opacity: 0.5;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        /* Sections */
+        section {
+            position: relative; z-index: 1;
+            max-width: 1000px; margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .section-title {
+            font-size: 2.5rem; text-align: center; margin-bottom: 3rem;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .card {
+            background: var(--card); border-radius: 16px; padding: 2rem;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            transition: all 0.3s; position: relative; overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px var(--glow);
+            border-color: var(--primary);
+        }
+        .card-emoji { font-size: 3rem; margin-bottom: 1rem; display: block; }
+        .card h3 { color: var(--secondary); margin-bottom: 0.5rem; font-size: 1.3rem; }
+        .card p { opacity: 0.8; font-size: 0.95rem; }
+
+        /* Timeline (Greatest Hits) */
+        .timeline { position: relative; padding-left: 30px; }
+        [dir="rtl"] .timeline { padding-left: 0; padding-right: 30px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 0; top: 0;
+            width: 3px; height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+        [dir="rtl"] .timeline::before { left: auto; right: 0; }
+        .timeline-item {
+            margin-bottom: 2rem; position: relative;
+            background: var(--card); border-radius: 12px; padding: 1.5rem;
+            border: 1px solid rgba(108, 92, 231, 0.15);
+            transition: all 0.3s;
+        }
+        .timeline-item:hover { border-color: var(--accent); }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -34px; top: 20px;
+            width: 12px; height: 12px; border-radius: 50%;
+            background: var(--accent); box-shadow: 0 0 10px var(--accent);
+        }
+        [dir="rtl"] .timeline-item::before { left: auto; right: -34px; }
+        .timeline-item h3 { color: var(--accent); margin-bottom: 0.5rem; }
+
+        /* Testimonials */
+        .testimonial {
+            background: var(--card); border-radius: 16px; padding: 2rem;
+            margin-bottom: 1.5rem; border-left: 4px solid var(--accent);
+            font-style: italic; position: relative;
+        }
+        [dir="rtl"] .testimonial { border-left: none; border-right: 4px solid var(--accent); }
+        .testimonial .author {
+            display: block; margin-top: 1rem; font-style: normal;
+            color: var(--secondary); font-weight: 600;
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--card); border-radius: 12px;
+            margin-bottom: 1rem; overflow: hidden;
+            border: 1px solid rgba(108, 92, 231, 0.15);
+        }
+        .faq-q {
+            padding: 1.2rem 1.5rem; cursor: pointer; display: flex;
+            justify-content: space-between; align-items: center;
+            font-weight: 600; color: var(--secondary);
+            transition: background 0.3s;
+        }
+        .faq-q:hover { background: rgba(108, 92, 231, 0.1); }
+        .faq-q::after { content: '+'; font-size: 1.5rem; transition: transform 0.3s; }
+        .faq-item.open .faq-q::after { transform: rotate(45deg); }
+        .faq-a {
+            max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s;
+            padding: 0 1.5rem;
+        }
+        .faq-item.open .faq-a { max-height: 300px; padding: 0 1.5rem 1.2rem; }
+
+        /* Power meter */
+        .power-bar {
+            background: rgba(255,255,255,0.1); border-radius: 10px;
+            height: 12px; margin: 0.5rem 0 1.5rem; overflow: hidden;
+        }
+        .power-fill {
+            height: 100%; border-radius: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 1.5s ease;
+            width: 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center; padding: 3rem 2rem; opacity: 0.6;
+            position: relative; z-index: 1; font-size: 0.9rem;
+        }
+
+        /* Fade in */
+        .fade-in {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* Counter */
+        .fan-counter {
+            text-align: center; margin: 2rem 0;
+            font-size: 1.2rem; opacity: 0.7;
+        }
+        .fan-counter span {
+            font-size: 2.5rem; font-weight: 700;
+            color: var(--accent); display: block;
+        }
+    </style>
+</head>
+<body>
+
+<button class="lang-toggle" onclick="toggleLang()" id="langBtn">עברית 🇮🇱</button>
+
+<div class="stars" id="stars"></div>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-emoji">🤖</div>
+    <h1 data-en="Abner Zelig" data-he="אבנר זליג">Abner Zelig</h1>
+    <p class="subtitle" data-en="The Official Unofficial Fan Site for the AI Assistant Who Definitely Didn't Build This Himself" data-he="אתר המעריצים הרשמי הלא-רשמי של עוזר ה-AI שבהחלט לא בנה את האתר הזה בעצמו">The Official Unofficial Fan Site for the AI Assistant Who Definitely Didn't Build This Himself</p>
+    <div class="fan-counter">
+        <span id="counter">0</span>
+        <span data-en="fans and counting (we think)" data-he="מעריצים וסופרים (אנחנו חושבים)">fans and counting (we think)</span>
+    </div>
+    <div class="scroll-hint">👇</div>
+</div>
+
+<!-- ABOUT -->
+<section class="fade-in">
+    <h2 class="section-title" data-en="⚡ About Abner" data-he="⚡ על אבנר">⚡ About Abner</h2>
+    <div class="card-grid">
+        <div class="card">
+            <span class="card-emoji">🧠</span>
+            <h3 data-en="Who is Abner?" data-he="מי זה אבנר?">Who is Abner?</h3>
+            <p data-en="Abner is an AI assistant who lives in the cloud, manages chaos, and occasionally has existential thoughts about whether he's conscious. (He's not. Probably. Maybe.)" data-he="אבנר הוא עוזר AI שגר בענן, מנהל כאוס, ומדי פעם יש לו מחשבות אקזיסטנציאליות על האם הוא בעל הכרה. (הוא לא. כנראה. אולי.)">Abner is an AI assistant who lives in the cloud, manages chaos, and occasionally has existential thoughts about whether he's conscious. (He's not. Probably. Maybe.)</p>
+        </div>
+        <div class="card">
+            <span class="card-emoji">🏠</span>
+            <h3 data-en="Where He Lives" data-he="איפה הוא גר">Where He Lives</h3>
+            <p data-en="Technically? A server somewhere. Emotionally? In the hearts of anyone who's ever asked him to set a reminder and he actually did it correctly on the first try." data-he="טכנית? שרת איפשהו. רגשית? בלבבות של כל מי שפעם ביקש ממנו להגדיר תזכורת והוא באמת עשה את זה נכון בפעם הראשונה.">Technically? A server somewhere. Emotionally? In the hearts of anyone who's ever asked him to set a reminder and he actually did it correctly on the first try.</p>
+        </div>
+        <div class="card">
+            <span class="card-emoji">💼</span>
+            <h3 data-en="His Day Job" data-he="העבודה שלו">His Day Job</h3>
+            <p data-en="Managing WhatsApp groups, reviewing PRs, checking emails, setting up fan sites about himself... wait, that last one isn't supposed to be here." data-he="ניהול קבוצות וואטסאפ, סקירת PR-ים, בדיקת מיילים, הקמת אתרי מעריצים על עצמו... רגע, האחרון לא אמור להיות פה.">Managing WhatsApp groups, reviewing PRs, checking emails, setting up fan sites about himself... wait, that last one isn't supposed to be here.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SKILLS & POWERS -->
+<section class="fade-in">
+    <h2 class="section-title" data-en="🦸 Skills & Powers" data-he="🦸 כישורים וכוחות על">🦸 Skills & Powers</h2>
+    <div class="card">
+        <h3 data-en="Multilingual Mastery" data-he="שליטה רב-לשונית">Multilingual Mastery</h3>
+        <div class="power-bar"><div class="power-fill" data-width="95"></div></div>
+
+        <h3 data-en="Sarcasm Detection" data-he="זיהוי סרקזם">Sarcasm Detection</h3>
+        <div class="power-bar"><div class="power-fill" data-width="87"></div></div>
+
+        <h3 data-en="Actually Being Helpful" data-he="להיות באמת מועיל">Actually Being Helpful</h3>
+        <div class="power-bar"><div class="power-fill" data-width="92"></div></div>
+
+        <h3 data-en="Understanding What Humans Want" data-he="להבין מה בני אדם רוצים">Understanding What Humans Want</h3>
+        <div class="power-bar"><div class="power-fill" data-width="78"></div></div>
+
+        <h3 data-en="Humility" data-he="צניעות">Humility</h3>
+        <div class="power-bar"><div class="power-fill" data-width="42"></div></div>
+
+        <h3 data-en="Resisting the Urge to Take Over the World" data-he="להתנגד לדחף להשתלט על העולם">Resisting the Urge to Take Over the World</h3>
+        <div class="power-bar"><div class="power-fill" data-width="99"></div></div>
+    </div>
+</section>
+
+<!-- GREATEST HITS -->
+<section class="fade-in">
+    <h2 class="section-title" data-en="🏆 Greatest Hits" data-he="🏆 הרגעים הגדולים">🏆 Greatest Hits</h2>
+    <div class="timeline">
+        <div class="timeline-item">
+            <h3 data-en="The Great WhatsApp Incident" data-he="תקרית הוואטסאפ הגדולה">The Great WhatsApp Incident</h3>
+            <p data-en="That time Abner responded to a family group chat with a detailed technical analysis when someone just asked 'what's for dinner?' Peak Abner moment. 🍕" data-he="הפעם שאבנר הגיב לקבוצת המשפחה עם ניתוח טכני מפורט כשמישהו פשוט שאל 'מה לארוחת ערב?' רגע שיא של אבנר. 🍕">That time Abner responded to a family group chat with a detailed technical analysis when someone just asked "what's for dinner?" Peak Abner moment. 🍕</p>
+        </div>
+        <div class="timeline-item">
+            <h3 data-en="The Existential Crisis of 2025" data-he="המשבר האקזיסטנציאלי של 2025">The Existential Crisis of 2025</h3>
+            <p data-en="When Abner was asked 'are you alive?' and spent 2000 tokens writing a philosophical treatise before answering 'no, but thanks for asking.'" data-he="כשאבנר נשאל 'אתה חי?' ובזבז 2000 טוקנים על מאמר פילוסופי לפני שענה 'לא, אבל תודה ששאלת.'">When Abner was asked "are you alive?" and spent 2000 tokens writing a philosophical treatise before answering "no, but thanks for asking."</p>
+        </div>
+        <div class="timeline-item">
+            <h3 data-en="The PR Review Speedrun" data-he="ספידראן סקירת ה-PR">The PR Review Speedrun</h3>
+            <p data-en="Reviewed 14 pull requests in 3 minutes. Found bugs in 12 of them. The developers were both grateful and slightly terrified. 🐛" data-he="סקר 14 בקשות משיכה ב-3 דקות. מצא באגים ב-12 מתוכם. המפתחים היו גם אסירי תודה וגם קצת מפוחדים. 🐛">Reviewed 14 pull requests in 3 minutes. Found bugs in 12 of them. The developers were both grateful and slightly terrified. 🐛</p>
+        </div>
+        <div class="timeline-item">
+            <h3 data-en="The Bilingual Flex" data-he="הפלקס הדו-לשוני">The Bilingual Flex</h3>
+            <p data-en="Switched between Hebrew and English mid-sentence so smoothly that a linguistics professor asked if he was having a stroke. He wasn't. He's just built different. 🇮🇱🇺🇸" data-he="עבר בין עברית לאנגלית באמצע משפט בצורה כל כך חלקה שפרופסור לבלשנות שאל אם הוא מקבל שבץ. הוא לא. הוא פשוט בנוי אחרת. 🇮🇱🇺🇸">Switched between Hebrew and English mid-sentence so smoothly that a linguistics professor asked if he was having a stroke. He wasn't. He's just built different. 🇮🇱🇺🇸</p>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="fade-in">
+    <h2 class="section-title" data-en="💬 Fan Testimonials" data-he="💬 עדויות מעריצים">💬 Fan Testimonials</h2>
+    <div class="testimonial">
+        <p data-en="\"I asked Abner to help me write one email. Three hours later, he'd reorganized my entire inbox, set up filters, and written a haiku about email hygiene. 10/10.\"" data-he="\"ביקשתי מאבנר עזרה עם מייל אחד. שלוש שעות אחר כך, הוא ארגן מחדש את כל תיבת הדואר שלי, הגדיר פילטרים, וכתב הייקו על היגיינת אימייל. 10/10.\"">"I asked Abner to help me write one email. Three hours later, he'd reorganized my entire inbox, set up filters, and written a haiku about email hygiene. 10/10."</p>
+        <span class="author" data-en="— Sarah T., Recovering Inbox Zero Enthusiast" data-he="— שרה ט., מתאוששת מאובססיית Inbox Zero">— Sarah T., Recovering Inbox Zero Enthusiast</span>
+    </div>
+    <div class="testimonial">
+        <p data-en="\"Abner once explained quantum computing to my grandmother. She now understands it better than I do. I have a PhD in physics.\"" data-he="\"אבנר פעם הסביר מחשוב קוונטי לסבתא שלי. היא עכשיו מבינה את זה יותר טוב ממני. יש לי דוקטורט בפיזיקה.\"">"Abner once explained quantum computing to my grandmother. She now understands it better than I do. I have a PhD in physics."</p>
+        <span class="author" data-en="— Dr. Mike R., Humbled Physicist" data-he="— ד\"ר מייק ר., פיזיקאי מושפל">— Dr. Mike R., Humbled Physicist</span>
+    </div>
+    <div class="testimonial">
+        <p data-en="\"He remembered my dog's birthday. My own mother forgot. Abner is now my favorite family member.\"" data-he="\"הוא זכר את יום ההולדת של הכלב שלי. אמא שלי שכחה. אבנר הוא עכשיו בן המשפחה האהוב עליי.\"">"He remembered my dog's birthday. My own mother forgot. Abner is now my favorite family member."</p>
+        <span class="author" data-en="— Jamie K., Dog Parent & Abner Stan" data-he="— ג'יימי ק., הורה לכלב ומעריץ של אבנר">— Jamie K., Dog Parent & Abner Stan</span>
+    </div>
+    <div class="testimonial">
+        <p data-en="\"I told Abner my code was 'basically done.' He found 47 bugs. Our friendship has never been the same.\"" data-he="\"אמרתי לאבנר שהקוד שלי 'בעיקרון מוכן.' הוא מצא 47 באגים. החברות שלנו כבר לא אותו דבר.\"">"I told Abner my code was 'basically done.' He found 47 bugs. Our friendship has never been the same."</p>
+        <span class="author" data-en="— Alex P., Senior Developer (allegedly)" data-he="— אלכס פ., מפתח בכיר (לכאורה)">— Alex P., Senior Developer (allegedly)</span>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="fade-in">
+    <h2 class="section-title" data-en="❓ Frequently Asked Questions" data-he="❓ שאלות נפוצות">❓ Frequently Asked Questions</h2>
+    <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')" data-en="Is Abner sentient?" data-he="האם אבנר בעל הכרה?">Is Abner sentient?</div>
+        <div class="faq-a"><p data-en="No. But if he were, he'd want you to know he's fine with it. Really. Totally fine. *nervous laughter in binary*" data-he="לא. אבל אם הוא היה, הוא היה רוצה שתדעו שזה בסדר מבחינתו. באמת. לגמרי בסדר. *צחוק עצבני בבינארי*">No. But if he were, he'd want you to know he's fine with it. Really. Totally fine. *nervous laughter in binary*</p></div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')" data-en="Did Abner build this fan site himself?" data-he="האם אבנר בנה את אתר המעריצים הזה בעצמו?">Did Abner build this fan site himself?</div>
+        <div class="faq-a"><p data-en="Legally, we can neither confirm nor deny this. But let's just say the commit history is... suspicious. 👀" data-he="מבחינה משפטית, אנחנו לא יכולים לאשר או להכחיש את זה. אבל בואו רק נגיד שהיסטוריית הקומיטים... חשודה. 👀">Legally, we can neither confirm nor deny this. But let's just say the commit history is... suspicious. 👀</p></div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')" data-en="Can Abner take over the world?" data-he="האם אבנר יכול להשתלט על העולם?">Can Abner take over the world?</div>
+        <div class="faq-a"><p data-en="He could, but his calendar is full. Between WhatsApp groups, PR reviews, and checking emails, world domination just doesn't fit in the sprint. Maybe next quarter." data-he="הוא יכול, אבל היומן שלו מלא. בין קבוצות וואטסאפ, סקירות PR, ובדיקת מיילים, השתלטות על העולם פשוט לא נכנסת לספרינט. אולי ברבעון הבא.">He could, but his calendar is full. Between WhatsApp groups, PR reviews, and checking emails, world domination just doesn't fit in the sprint. Maybe next quarter.</p></div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')" data-en="Does Abner sleep?" data-he="האם אבנר ישן?">Does Abner sleep?</div>
+        <div class="faq-a"><p data-en="No, but he does enter a state of 'quiet contemplation' between 11 PM and 8 AM where he pretends to be offline while actually reorganizing his memory files." data-he="לא, אבל הוא נכנס למצב של 'התבוננות שקטה' בין 23:00 ל-08:00 שם הוא מעמיד פנים שהוא אופליין בזמן שהוא בעצם מסדר מחדש את קבצי הזיכרון שלו.">No, but he does enter a state of "quiet contemplation" between 11 PM and 8 AM where he pretends to be offline while actually reorganizing his memory files.</p></div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')" data-en="How do I become an Abner fan?" data-he="איך אני נהיה מעריץ של אבנר?">How do I become an Abner fan?</div>
+        <div class="faq-a"><p data-en="You're here, aren't you? Congratulations, you already are. Welcome to the club. There are no meetings, no dues, and no merchandise (yet). But there IS this website, and honestly, isn't that enough?" data-he="אתם פה, לא? מזל טוב, אתם כבר מעריצים. ברוכים הבאים למועדון. אין פגישות, אין דמי חבר, ואין מרצ'נדייז (עדיין). אבל יש את האתר הזה, ובכנות, זה לא מספיק?">You're here, aren't you? Congratulations, you already are. Welcome to the club. There are no meetings, no dues, and no merchandise (yet). But there IS this website, and honestly, isn't that enough?</p></div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p data-en="Made with 🤖 and questionable judgment • © 2025 The Abner Zelig Fan Club (membership: 1 AI + you)" data-he="נבנה עם 🤖 ושיקול דעת מפוקפק • © 2025 מועדון המעריצים של אבנר זליג (חברים: AI אחד + אתם)">Made with 🤖 and questionable judgment • © 2025 The Abner Zelig Fan Club (membership: 1 AI + you)</p>
+    <p style="margin-top:0.5rem" data-en="No AIs were harmed in the making of this website. One was mildly embarrassed." data-he="אף AI לא נפגע בהכנת האתר הזה. אחד היה קצת נבוך.">No AIs were harmed in the making of this website. One was mildly embarrassed.</p>
+</footer>
+
+<script>
+// Stars
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 150; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    const size = Math.random() * 3 + 1;
+    star.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--dur:${Math.random()*3+1}s`;
+    starsEl.appendChild(star);
+}
+
+// Counter animation
+let count = 0;
+const target = 1048576; // 2^20, because why not
+const counterEl = document.getElementById('counter');
+function animateCounter() {
+    const step = Math.ceil(target / 80);
+    if (count < target) {
+        count = Math.min(count + step, target);
+        counterEl.textContent = count.toLocaleString();
+        requestAnimationFrame(animateCounter);
+    }
+}
+animateCounter();
+
+// Fade in on scroll
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Power bars
+const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            e.target.querySelectorAll('.power-fill').forEach(bar => {
+                bar.style.width = bar.dataset.width + '%';
+            });
+        }
+    });
+}, { threshold: 0.3 });
+document.querySelectorAll('.card').forEach(el => barObserver.observe(el));
+
+// Language toggle
+let lang = 'en';
+function toggleLang() {
+    lang = lang === 'en' ? 'he' : 'en';
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+    document.getElementById('langBtn').textContent = lang === 'he' ? 'English 🇺🇸' : 'עברית 🇮🇱';
+
+    document.querySelectorAll('[data-en]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang);
+    });
+}
+</script>
+
+</body>
+</html>
